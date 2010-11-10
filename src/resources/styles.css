@@ -1,0 +1,39 @@
+/* styles for pull to refresh */
+
+div.pullrefresh span.arrow {
+  width: 32px;
+  height: 60px;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-image: url('/resources/img/blackArrow.png');
+  background-repeat: no-repeat;
+  margin: 15px 0 0 35px;
+}
+
+div.pullrefresh span.arrow.loading {
+  background-image: url('/resources/img/loader.gif');
+  background-repeat: no-repeat;
+  background-position: 0 7px;
+}
+
+div.pullrefresh span.msg {
+  width: 80%;
+  text-align: center;
+  font-size: 0.9em;
+  position: absolute;
+  top: 20px;
+  left: 40px;
+  margin: 5px 0 5px 60px; 
+  font-weight: bold;
+}
+
+div.pullrefresh span.lastupdate {
+  width: 80%;
+  text-align: center;
+  font-size: 0.8em;
+  position: absolute;
+  top: 40px;
+  left: 40px;
+  margin: 15px 0 5px 60px;
+}
