@@ -34,6 +34,7 @@ Ext.ns('Ext.ux.touch');
        reloadFn: function(cb,scope){
          // do whatever needs to happen for reload
          // then call the cb function passed in
+         // cb.call(this);
        }
      })],
      ...
@@ -51,7 +52,6 @@ Ext.ux.touch.ListPullRefresh = Ext.extend(Ext.util.Observable, {
   init: function(cmp){
     this.cmp = cmp;
     this.lastUpdate = new Date();
-    cmp.loadingText = undefined;
     cmp.on('render', this.initPullHandler, this);
     if (!this.reloadFn){
       cmp.getStore().on('load', this.reloadComplete, this);
@@ -68,12 +68,15 @@ Ext.ux.touch.ListPullRefresh = Ext.extend(Ext.util.Observable, {
         '</div>'+
       '</div>');
     this.pullEl = this.pullTpl.insertBefore(this.cmp.scroller.el, {h:0,m:this.langPullRefresh,l:this.lastUpdate}, true);
+    this.pullEl.hide();
+    Ext.Element.cssTranslate(this.pullEl, {x:0, y:-75});
     this.cmp.scroller.on('offsetchange', this.handlePull, this);
   },
   //private
   handlePull: function(scroller, offset){
     if (scroller.direction === 'vertical' && !this.loading){
       if (offset.y > 0){
+        Ext.Element.cssTranslate(this.pullEl, {x:0, y:offset.y-75});
         if (offset.y > 75){
           // state 1
           if (this.state !== 1){
@@ -82,7 +85,7 @@ Ext.ux.touch.ListPullRefresh = Ext.extend(Ext.util.Observable, {
             this.pullTpl.overwrite(this.pullEl, {h:offset.y,m:this.langReleaseRefresh,l:this.lastUpdate});
             Ext.Anim.run(this.pullEl.select('.arrow').first(),'rotate',{dir:'ccw',fromAngle:0,toAngle:180});
           }
-        }else if (scroller.isAnimating){
+        }else if (!scroller.isDragging()){
           // state 3
           if (this.state !== 3){
             this.prevState = this.state;
@@ -90,8 +93,7 @@ Ext.ux.touch.ListPullRefresh = Ext.extend(Ext.util.Observable, {
             if (this.prevState == 1){
               this.loading = true;
               this.lastUpdate = new Date();
-              this.pullTpl.overwrite(this.pullEl, {h:75,m:this.langLoading,l:this.lastUpdate,s:'loading'});
-              this.cmp.scroller.moveTo(75,0);
+              this.pullEl.hide();
               if (this.reloadFn){
                 this.reloadFn.call(this,this.reloadComplete,this);
               }else{
@@ -105,6 +107,7 @@ Ext.ux.touch.ListPullRefresh = Ext.extend(Ext.util.Observable, {
             this.prevState = this.state;
             this.state = 2;
             this.pullTpl.overwrite(this.pullEl, {h:offset.y,m:this.langPullRefresh,l:this.lastUpdate});
+            this.pullEl.show();
             if (this.prevState == 1){
               Ext.Anim.run(this.pullEl.select('.arrow').first(),'rotate',{dir:'cw',fromAngle:180,toAngle:0});
             }
