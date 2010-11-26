@@ -65,7 +65,7 @@ Ext.ux.touch.ListPullRefresh = Ext.extend(Ext.util.Observable, {
         '<div class="msgwrap" style="height: 75px; bottom: 0px; position: relative;">'+
           '<span class="arrow {s}"></span>'+
           '<span class="msg">{m}</span>'+
-          '<span class="lastupdate">Last Updated: {[Ext.util.Format.date(values.l,"m/d/Y h:ma")]}</span>'+
+          '<span class="lastupdate">Last Updated: {[Ext.util.Format.date(values.l,"m/d/Y h:iA")]}</span>'+
         '</div>'+
       '</div>');
     this.pullEl = this.pullTpl.insertBefore(this.cmp.scroller.el, {h:0,m:this.langPullRefresh,l:this.lastUpdate}, true);
