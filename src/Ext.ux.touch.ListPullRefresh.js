@@ -52,6 +52,7 @@ Ext.ux.touch.ListPullRefresh = Ext.extend(Ext.util.Observable, {
   init: function(cmp){
     this.cmp = cmp;
     this.lastUpdate = new Date();
+    cmp.loadingText = undefined;
     cmp.on('render', this.initPullHandler, this);
     if (!this.reloadFn){
       cmp.getStore().on('load', this.reloadComplete, this);

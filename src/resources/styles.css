@@ -1,39 +1,48 @@
 /* styles for pull to refresh */
 
+div.pullrefresh, div.pullrefresh div.msgwrap {
+  background-color: #e1e1e1 !important;
+}
+
 div.pullrefresh span.arrow {
   width: 32px;
   height: 60px;
   position: absolute;
-  top: 10px;
+  top: 0;
   left: 10px;
   background-image: url('/resources/img/blackArrow.png');
   background-repeat: no-repeat;
-  margin: 15px 0 0 35px;
+  margin: 10px 0 0 25px;
 }
 
-div.pullrefresh span.arrow.loading {
+div.loadingspacer span.loading {
+  width: 32px;
+  height: 60px;
+  position: absolute;
+  top: 0;
+  left: 10px;
   background-image: url('/resources/img/loader.gif');
   background-repeat: no-repeat;
   background-position: 0 7px;
 }
 
-div.pullrefresh span.msg {
+div.pullrefresh span.msg, div.loadingspacer span.msg {
   width: 80%;
   text-align: center;
   font-size: 0.9em;
   position: absolute;
-  top: 20px;
+  top: 12px;
   left: 40px;
-  margin: 5px 0 5px 60px; 
+  margin: 5px 0 5px 40px; 
   font-weight: bold;
 }
 
 div.pullrefresh span.lastupdate {
   width: 80%;
   text-align: center;
-  font-size: 0.8em;
+  font-size: 0.7em;
   position: absolute;
-  top: 40px;
+  top: 25px;
   left: 40px;
-  margin: 15px 0 5px 60px;
+  margin: 15px 0 5px 40px;
 }
