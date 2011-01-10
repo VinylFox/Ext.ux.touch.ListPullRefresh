@@ -4,6 +4,8 @@ This is a plugin based on enormego's EGOTableViewPullRefresh implementation whic
 
 Same concept as usual - you have a list of items, and you drag the list down which reveals the 'Pull To Refresh...' section. Releasing the list and letting it bounce back into place will trigger a reload. Sliding the list back up past a certian point then releasing it will not cause a reload.
 
+http://content.screencast.com/users/VinylFox/folders/Jing/media/7060ea80-1e2c-4cd6-a102-a53120d7e665/2010-11-29_1457.png
+
 Resources for CSS and Images are located in the resources folder. Image URL's in the CSS will need to be updated to suit your particular setup.
 
 = Usage

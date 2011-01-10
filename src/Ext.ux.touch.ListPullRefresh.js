@@ -42,21 +42,23 @@ Ext.ns('Ext.ux.touch');
  * </code></pre>
  */
 Ext.ux.touch.ListPullRefresh = Ext.extend(Ext.util.Observable, {
+  constructor: function(config){
+    Ext.apply(this,config);
+    this.addEvents({
+      'released': true
+    });
+    Ext.ux.touch.ListPullRefresh.superclass.constructor.call(this, config);
+  },
   langPullRefresh: 'Pull down to refresh...',
   langReleaseRefresh: 'Release to refresh...',
   langLoading: 'Loading...',
   loading: false,
-  //define the function to call for reloading.
-  reloadFn: undefined,
   // private
   init: function(cmp){
     this.cmp = cmp;
     this.lastUpdate = new Date();
     cmp.loadingText = undefined;
     cmp.on('render', this.initPullHandler, this);
-    if (!this.reloadFn){
-      cmp.getStore().on('load', this.reloadComplete, this);
-    }
   },
   // private
   initPullHandler: function(){
@@ -95,11 +97,7 @@ Ext.ux.touch.ListPullRefresh = Ext.extend(Ext.util.Observable, {
               this.loading = true;
               this.lastUpdate = new Date();
               this.pullEl.hide();
-              if (this.reloadFn){
-                this.reloadFn.call(this,this.reloadComplete,this);
-              }else{
-                this.cmp.getStore().load();
-              }
+              this.fireEvent('released',this,this.cmp);
             }
           }
         }else{
@@ -118,7 +116,7 @@ Ext.ux.touch.ListPullRefresh = Ext.extend(Ext.util.Observable, {
     }
   },
   //private
-  reloadComplete: function(){
+  processComplete: function(){
     this.loading = false;
     this.lastUpdate = new Date();
     this.pullTpl.overwrite(this.pullEl, {h:0,m:this.langPullRefresh,l:this.lastUpdate});
