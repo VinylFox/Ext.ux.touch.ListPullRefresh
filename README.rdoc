@@ -14,12 +14,16 @@ Resources for CSS and Images are located in the resources folder. Image URL's in
        xtype: 'list',
        ...,
        plugins: [new Ext.ux.touch.ListPullRefresh({
-         reloadFn: function(cb,scope){
-           // do whatever needs to happen for reload
-           // then call the cb function passed in
+         listeners: {
+            'released': function(plugin,list){
+              // call the plugins processComplete method to hide the 'loading' indicator
+              your_store.on('load',plugin.processComplete,plugin,{single:true});
+              // do whatever needs to happen for reload
+              your_store.load();
+            }
          }
        })],
        ...
    }
    
-If a reloadFn is not specified, the load method of the lists store will be called, otherwise the reloadFn is executed and passed in a callback function and scope to be called after you have done whatever you need to do to reload the data in the list.
+The 'released' event is fired when the user drags this list past the required distance and releases it. This will also display the 'loading' indicator, which will need to be removed when your done doing whatever it is you need to do by calling the plugins processComplete method.  
